@@ -19,12 +19,12 @@ To change the sda and sck pins, you have to include the smi.c file and change th
 
 If you're using c++, you need the extern "C" declaration to include the library files. You can also use the enhanced library, which is more user-friendly, intuitive and provides additional features and functions.
 
-´´´
+```
 extern "C" {
   #include "smi.c"
   #include "port.h"
 }
-´´´
+```
 
 ### Acknowledgments
 My heartfelt thanks go to the entire community and all contributors. Your invaluable support and feedback played a crucial role in the development of this library, making it a useful resource for Arduino enthusiasts.
