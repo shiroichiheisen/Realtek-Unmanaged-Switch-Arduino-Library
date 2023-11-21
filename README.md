@@ -6,7 +6,7 @@
 
 ### About This Library
 This repository contains the Realtek Unmanaged Switch Library Version 1.3.12.
-- **Staying Updated:** If you're using or have a newer version of this library, please contact me at [your email/contact information] to discuss updating this repository.
+- **Staying Updated:** If you're using or have a newer version of this library, please contact me at [your email/contact information on my profile page] to discuss updating this repository.
 - **Original Library Files:** For those who need them, the original library files are included in the `api_source` folder.
 
 ### Enhanced C++ Library for Arduino
@@ -15,7 +15,7 @@ I have developed a C++ library with classes to enhance the usability of this lib
 
 In addition to the main library, there's a EEPROM file designed for the RTL8367S IC. In my experience, initializing the switch with this EEPROM file before using the library for further configuration proves to be more effective because you dont need to initialize with your IC (you will need to wait about 3 seconds to initialize to make the configurations). This file is just 4KB in size, making it compatible with smaller EEPROMs like the 24C04 or larger. Although I'm currently using a 24C32 due to availability, the 24C04 is more than sufficient to store the EEPROM file. Please read the RTL8367S datasheet, this IC use the pin EEPROM_MOD/LAN4LED0 to select the eeprom size, if low - eeprom size less or equal to 16kb (24C02 - 24C16), high - eeprom size greater than 16kb (24C32 - 24C256).
 
-To change the sda and sck pins, you have to include the smi.c file and change the RTK_I2C_SCK_PIN and RTK_I2C_SDA_PIN variables. You can also change the I2C speed by changing the RTK_I2C_DELAY variable (this delay is microseconds, so 1000 = 1ms). The default pins are 1 and 2, and the default speed is 1ms between each bit.
+To change the sda and sck pins, you have to include the smi.c file and change the RTK_I2C_SCK_PIN and RTK_I2C_SDA_PIN variables. You can also change the I2C speed by changing the RTK_I2C_DELAY variable (this delay is microseconds, so 1000 = 1ms). The default pins are 1 and 2, and the default speed is 1 between each bit.
 
 If you're using c++, you need the extern "C" declaration to include the library files. You can also use the enhanced library, which is more user-friendly, intuitive and provides additional features and functions.
 
