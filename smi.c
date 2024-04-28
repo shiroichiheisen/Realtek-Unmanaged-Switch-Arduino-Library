@@ -10,7 +10,7 @@
 #include "rtk_types.h"
 #include "smi.h"
 #include "rtk_error.h"
-#include "Arduino.h"
+#include "Arduino.h" /* Erase this line to use outside of Arduino env */
 
 /*******************************************************************************/
 /*  I2C porting                                                                */
@@ -20,39 +20,39 @@ rtk_uint8 RTK_I2C_SCK_PIN = 1; /* GPIO used for SMI Clock Generation */
 rtk_uint8 RTK_I2C_SDA_PIN = 2; /* GPIO used for SMI Data signal */
 rtk_uint8 RTK_I2C_DELAY = 1;   /* Delay time for I2C */
 
-#define CLK_DURATION delayMicroseconds(RTK_I2C_DELAY)
+#define CLK_DURATION delayMicroseconds(RTK_I2C_DELAY) /* Change this line to use outside of Arduino env */
 
 static void _smi_start(void)
 {
     /* change GPIO pin to Output only */
-    pinMode(RTK_I2C_SCK_PIN, OUTPUT);
-    pinMode(RTK_I2C_SDA_PIN, OUTPUT);
+    pinMode(RTK_I2C_SCK_PIN, OUTPUT); /* Change this line to use outside of Arduino env */
+    pinMode(RTK_I2C_SDA_PIN, OUTPUT); /* Change this line to use outside of Arduino env */
 
     /* Initial state: SCK: 0, SDA: 1 */
-    digitalWrite(RTK_I2C_SCK_PIN, 0);
-    digitalWrite(RTK_I2C_SDA_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
+    digitalWrite(RTK_I2C_SDA_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
 
     /* CLK 1: 0 -> 1, 1 -> 0 */
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 0);
+    digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
 
     /* CLK 2: */
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SDA_PIN, 0);
+    digitalWrite(RTK_I2C_SDA_PIN, 0); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 0);
+    digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SDA_PIN, 1);
+    digitalWrite(RTK_I2C_SDA_PIN, 1); /* Change this line to use outside of Arduino env */
 }
 
 static void _smi_writeBit(rtk_uint16 signal, rtk_uint32 bitLen)
 {
     /* change GPIO pin to Output only */
-    pinMode(RTK_I2C_SDA_PIN, OUTPUT);
+    pinMode(RTK_I2C_SDA_PIN, OUTPUT); /* Change this line to use outside of Arduino env */
 
     for (; bitLen > 0; bitLen--)
     {
@@ -60,16 +60,16 @@ static void _smi_writeBit(rtk_uint16 signal, rtk_uint32 bitLen)
 
         /* prepare data */
         if (signal & (1 << (bitLen - 1)))
-            digitalWrite(RTK_I2C_SDA_PIN, 1);
+            digitalWrite(RTK_I2C_SDA_PIN, 1); /* Change this line to use outside of Arduino env */
         else
-            digitalWrite(RTK_I2C_SDA_PIN, 0);
+            digitalWrite(RTK_I2C_SDA_PIN, 0); /* Change this line to use outside of Arduino env */
 
         CLK_DURATION;
 
         /* clocking */
-        digitalWrite(RTK_I2C_SCK_PIN, 1);
+        digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
         CLK_DURATION;
-        digitalWrite(RTK_I2C_SCK_PIN, 0);
+        digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
     }
 }
 
@@ -78,17 +78,17 @@ static void _smi_readBit(rtk_uint32 bitLen, rtk_uint32 *rData)
     rtk_uint32 u = 0;
 
     /* change GPIO pin to Input only */
-    pinMode(RTK_I2C_SDA_PIN, INPUT);
+    pinMode(RTK_I2C_SDA_PIN, INPUT); /* Change this line to use outside of Arduino env */
 
     for (*rData = 0; bitLen > 0; bitLen--)
     {
         CLK_DURATION;
 
         /* clocking */
-        digitalWrite(RTK_I2C_SCK_PIN, 1);
+        digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
         CLK_DURATION;
-        u = digitalRead(RTK_I2C_SDA_PIN);
-        digitalWrite(RTK_I2C_SCK_PIN, 0);
+        u = digitalRead(RTK_I2C_SDA_PIN); /* Change this line to use outside of Arduino env */
+        digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
 
         *rData |= (u << (bitLen - 1));
     }
@@ -97,28 +97,28 @@ static void _smi_readBit(rtk_uint32 bitLen, rtk_uint32 *rData)
 static void _smi_stop(void)
 {
     /* change GPIO pin to Output only */
-    pinMode(RTK_I2C_SDA_PIN, OUTPUT);
+    pinMode(RTK_I2C_SDA_PIN, OUTPUT); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SDA_PIN, 0);
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SDA_PIN, 0); /* Change this line to use outside of Arduino env */
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SDA_PIN, 1);
+    digitalWrite(RTK_I2C_SDA_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 0);
+    digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
 
     /* add a click */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 0);
+    digitalWrite(RTK_I2C_SCK_PIN, 0); /* Change this line to use outside of Arduino env */
     CLK_DURATION;
-    digitalWrite(RTK_I2C_SCK_PIN, 1);
+    digitalWrite(RTK_I2C_SCK_PIN, 1); /* Change this line to use outside of Arduino env */
 
     /* change GPIO pin to Input only */
-    pinMode(RTK_I2C_SDA_PIN, INPUT);
-    pinMode(RTK_I2C_SCK_PIN, INPUT);
+    pinMode(RTK_I2C_SDA_PIN, INPUT); /* Change this line to use outside of Arduino env */
+    pinMode(RTK_I2C_SCK_PIN, INPUT); /* Change this line to use outside of Arduino env */
 }
 
 rtk_int32 smi_read(rtk_uint32 mAddrs, rtk_uint32 *rData)
