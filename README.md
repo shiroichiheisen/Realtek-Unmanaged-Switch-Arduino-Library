@@ -6,8 +6,10 @@
 
 ### About This Library
 This repository contains the Realtek Unmanaged Switch Library Version 1.3.12.
-- **Staying Updated:** If you're using or have a newer version of this library, please contact me at [your email/contact information on my profile page] to discuss updating this repository.
+- **Staying Updated:** If you're using or have a newer version of this library, please contact me at [contato@danielbri.me] to discuss updating this repository.
 - **Original Library Files:** For those who need them, the original library files are included in the `api_source` folder.
+
+### If You Want to Use this library outside of Arduino (esp-idf, Atmel, and others) just edit the smi.c. At the start, write and read functions, change the digital read, digital write, and pinMode to your needs, and erase the #include "Arduino".
 
 ### Enhanced C++ Library for Arduino
 I have developed a C++ library with classes to enhance the usability of this library. The enhanced library is designed to be more user-friendly and intuitive. It also provides additional features and functions.
